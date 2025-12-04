@@ -164,12 +164,15 @@
                 correctAnswer: [0]
             }
         ];
+        
         let currentQuestion = 0;
+        let correctCounter = 0;
+
         let timeCounter = 10;
+        let timerID;
+
         Show();
         Timer();
-
-        let allCheckboxs = document.querySelectorAll("#questions #blockCheckbox")
 
         function Show(){
             questionsJS.innerHTML = "";
@@ -185,6 +188,7 @@
                     let testCheckboxAnswer = document.createElement("input");
                     testCheckboxAnswer.type = "checkbox";
                     testCheckboxAnswer.name = "sameName";
+                    testCheckboxAnswer.classList.add("testAnswer");
                     testCheckboxAnswer.value = i;
 
                     let labelCheckbox = document.createElement("label");
@@ -196,6 +200,10 @@
         }
 
         answerJS.addEventListener("click", function() {
+            CheckAnswer();
+        });
+
+        function CheckAnswer(auto = false){
             let selected = Array.from(document.querySelectorAll(".testAnswer"))
             .filter(cb => cb.checked)
             .map(cb => Number(cb.value));
@@ -204,29 +212,41 @@
 
             let ok = selected.length === correct.length && selected.every(v => correct.includes(v));
 
-            if (ok){
-                alert("Correct");
+            if (auto){
+                alert("Inccorect!");
             }
             else{
-                alert("Incorrect");
+                alert(ok ? "Correct" : "Incorrect");
             }
+            NextQuestion();
+        }
+
+        function NextQuestion() {
+            clearInterval(timerID);
             currentQuestion++;
 
             if(currentQuestion < testData.length){
+                timeCounter = 10;
                 Show();
+                Timer();
             }
             else {
+                timerJS.textContent = "";
                 alert("Test is over");
             }
-        })
+        }
 
-        function Timer(){
+        function Timer() {
             timerJS.textContent = `Осталось ${timeCounter} секунд`;
-            timeCounter--;
-            if (timeCounter < 0){
-                clearInterval();
-            }
-            setTimeout(Timer, 1000);
+
+            timerID = setInterval( () => {
+                timeCounter--;
+                timerJS.textContent = `Осталось ${timeCounter} секунд`;
+                if (timeCounter < 0){
+                    clearInterval(timerID);
+                    CheckAnswer(true);
+                }
+            }, 1000);
         }
     </script>
 </body>
