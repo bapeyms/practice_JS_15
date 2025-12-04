@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+        #questionAppearance{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 50%;
+            margin-left: 1em;
+            margin-top: 0.5em;;
+        }
+        #questionNumber{
+            font-weight: bold;
+        }
+        #questions{
+            background-color: rgb(224, 224, 224);
+        }
+        #answer{
+            margin-top: 1em;
+            width: 10%;
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+    <di id="questionAppearance">
+        <h3 id="questionNumber">p</h3>
+        <div id="questions">
+            
+        </div>
+        <button id="answer">Ответить</button>
+    </div>
+    
+    <script>
+        let questionNumberJS = document.querySelector("#questionNumber");
+        let questionsJS = document.querySelector("#questions");
+        let answerJS = document.querySelector("#answer");
+
+        let testQuestions = ["Для чего можна использовать JavaScript?"];
+        let testAnswers = ["Для создания самостоятельной исполняемой программы", "Для обработки событий на web-странице", "Для добавления динамики и 'интелекта' в web-страницу", "Все варианты верны"];
+        let questionCounter = 1;
+        Show();
+
+        function Show(){
+            for (let i = 0; i < 12; i++){
+                questionNumberJS.textContent = `Вопрос ${questionCounter} из 12`;
+                questionsJS.textContent = testQuestions[i];
+                for (let j = 0; j < 4; j++){
+                    let testCheckboxAnswer = document.createElement("input");
+                    testCheckboxAnswer.type = "checkbox";
+                    testCheckboxAnswer.name = "sameName";
+                    testCheckboxAnswer.textContent = testAnswers[j];
+                    questionsJS.append(testCheckboxAnswer);
+                }
+                questionCounter++;
+            }
+        }
+    </script>
+</body>
+</html>
