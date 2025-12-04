@@ -27,36 +27,61 @@
     </style>
 </head>
 <body>
-    <di id="questionAppearance">
+    <div id="questionAppearance">
         <h3 id="questionNumber">p</h3>
         <div id="questions">
             
         </div>
         <button id="answer">Ответить</button>
+        <p id="timer"></p>
     </div>
     
     <script>
         let questionNumberJS = document.querySelector("#questionNumber");
         let questionsJS = document.querySelector("#questions");
         let answerJS = document.querySelector("#answer");
+        let timerJS = document.querySelector("#timer");
 
         let testQuestions = ["Для чего можна использовать JavaScript?"];
         let testAnswers = ["Для создания самостоятельной исполняемой программы", "Для обработки событий на web-странице", "Для добавления динамики и 'интелекта' в web-страницу", "Все варианты верны"];
         let questionCounter = 1;
+        let timeCounter = 0;
         Show();
+        Timer();
+
+        let allCheckboxs = document.querySelectorAll("#questions #blockCheckbox")
 
         function Show(){
-            for (let i = 0; i < 12; i++){
+            //for (let i = 0; i < 12; i++){
                 questionNumberJS.textContent = `Вопрос ${questionCounter} из 12`;
-                questionsJS.textContent = testQuestions[i];
+                questionsJS.textContent = testQuestions[questionCounter-1];
                 for (let j = 0; j < 4; j++){
+                    let blockForCheckbox = document.createElement("div");
+                    blockForCheckbox.id  = "blockCheckbox";
+
                     let testCheckboxAnswer = document.createElement("input");
                     testCheckboxAnswer.type = "checkbox";
                     testCheckboxAnswer.name = "sameName";
-                    testCheckboxAnswer.textContent = testAnswers[j];
-                    questionsJS.append(testCheckboxAnswer);
+
+                    let labelCheckbox = document.createElement("label");
+                    labelCheckbox.textContent = testAnswers[j];
+
+                    blockForCheckbox.append(testCheckboxAnswer, labelCheckbox);
+                    questionsJS.append(blockForCheckbox);
                 }
                 questionCounter++;
+            //}
+        }
+
+        answerJS.addEventListener("click", function() {
+            
+        })
+
+        function Timer(){
+            counter++;
+            timerJS.textContent = `Осталось ${counter} секунд`;
+            if (counter == 5){
+                
             }
         }
     </script>
