@@ -42,47 +42,102 @@
         let answerJS = document.querySelector("#answer");
         let timerJS = document.querySelector("#timer");
 
-        let testQuestions = ["Для чего можна использовать JavaScript?"];
-        let testAnswers = ["Для создания самостоятельной исполняемой программы", "Для обработки событий на web-странице", "Для добавления динамики и 'интелекта' в web-страницу", "Все варианты верны"];
-        let questionCounter = 1;
-        let timeCounter = 0;
-        Show();
+        let testData = [
+            {
+                testQuestions: "Для чего можна использовать JavaScript?",
+                testAnswers: [
+                    "Для создания самостоятельной исполняемой программы",
+                    "Для обработки событий на web-странице",
+                    "Для добавления динамики и 'интелекта' в web-страницу",
+                    "Все варианты верны"
+                ],
+                correctAnswer: [3]
+            },
+            {
+                testQuestions: "Для чего можна использовать JavaScript?",
+                testAnswers: [
+                    "Для создания самостоятельной исполняемой программы",
+                    "Для обработки событий на web-странице",
+                    "Для добавления динамики и 'интелекта' в web-страницу",
+                    "Все варианты верны"
+                ],
+                correctAnswer: [3]
+            },
+            {
+                testQuestions: "Для чего можна использовать JavaScript?",
+                testAnswers: [
+                    "Для создания самостоятельной исполняемой программы",
+                    "Для обработки событий на web-странице",
+                    "Для добавления динамики и 'интелекта' в web-страницу",
+                    "Все варианты верны"
+                ],
+                correctAnswer: [3]
+            }
+        ];
+        let currentQuestion = 0;
+        let timeCounter = 10;
+
         Timer();
 
         let allCheckboxs = document.querySelectorAll("#questions #blockCheckbox")
 
         function Show(){
-            //for (let i = 0; i < 12; i++){
-                questionNumberJS.textContent = `Вопрос ${questionCounter} из 12`;
-                questionsJS.textContent = testQuestions[questionCounter-1];
-                for (let j = 0; j < 4; j++){
+            questionsJS.innerHTML = "";
+
+            let q = testData[currentQuestion];
+            questionNumberJS.textContent = `Вопрос ${currentQuestion + 1} из ${testData.length}`;
+            questionNumberJS.textContent = q.testQuestions;
+
+            for (let i = 0; i < q.testAnswers.length; i++){
                     let blockForCheckbox = document.createElement("div");
                     blockForCheckbox.id  = "blockCheckbox";
 
                     let testCheckboxAnswer = document.createElement("input");
                     testCheckboxAnswer.type = "checkbox";
                     testCheckboxAnswer.name = "sameName";
+                    testCheckboxAnswer.value = i;
 
                     let labelCheckbox = document.createElement("label");
                     labelCheckbox.textContent = testAnswers[j];
 
                     blockForCheckbox.append(testCheckboxAnswer, labelCheckbox);
                     questionsJS.append(blockForCheckbox);
-                }
-                questionCounter++;
-            //}
+            }
         }
 
         answerJS.addEventListener("click", function() {
-            
+            let selected = Array.from(document.querySelectorAll(".testAnswer"))
+            .filter(cb => cb.checked)
+            .map(cb => Number(cb.value));
+
+            let correct = testData[currentQuestion].correctAnswer;
+
+            let ok = selected.length === correct.length && selected.every(v => correct.includes(v));
+
+            if (ok){
+                alert("Correct");
+            }
+            else{
+                alert("Incorrect");
+            }
+            currentQuestion++;
+
+            if(currentQuestion < testData.length){
+                Show();
+            }
+            else {
+                alert("Test is over");
+            }
         })
 
         function Timer(){
-            counter++;
             timerJS.textContent = `Осталось ${counter} секунд`;
-            if (counter == 5){
-                
+            counter--;
+            if (counter < 0){
+                answerJS.click();
+                return;
             }
+            setTimeout(Timer, 1000);
         }
     </script>
 </body>
