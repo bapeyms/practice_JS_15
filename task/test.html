@@ -54,24 +54,114 @@
                 correctAnswer: [3]
             },
             {
-                testQuestions: "Для чего можна использовать JavaScript?",
+                testQuestions: "Где обычно выполняется JavaScript-код?",
                 testAnswers: [
-                    "1Для создания самостоятельной исполняемой программы",
-                    "1Для обработки событий на web-странице",
-                    "1Для добавления динамики и 'интелекта' в web-страницу",
-                    "1Все варианты верны"
+                    "В браузере",
+                    "В текстовом редакторе",
+                    "В графическом редакторе",
+                    "В файловой системе"
                 ],
-                correctAnswer: [3]
+                correctAnswer: [0]
             },
             {
-                testQuestions: "Для чего можна использовать JavaScript?",
+                testQuestions: "Какое расширение обычно имеет JavaScript-файл?",
                 testAnswers: [
-                    "Для создания самостоятельной исполняемой программы",
-                    "Для обработки событий на web-странице",
-                    "Для добавления динамики и 'интелекта' в web-страницу",
-                    "Все варианты верны"
+                    ".js",
+                    ".java",
+                    ".jvs",
+                    ".script"
                 ],
-                correctAnswer: [3]
+                correctAnswer: [0]
+            },
+            {
+                testQuestions: "Каким тегом подключают JavaScript на веб-странице?",
+                testAnswers: [
+                    "<javascript>",
+                    "<script>",
+                    "<js>",
+                    "<code>"
+                ],
+                correctAnswer: [1]
+            },
+            {
+                testQuestions: "Что такое переменная в JavaScript?",
+                testAnswers: [
+                    "Участок памяти для хранения данных",
+                    "Тип данных",
+                    "Функция",
+                    "Оператор условия"
+                ],
+                correctAnswer: [0]
+            },
+            {
+                testQuestions: "Каким ключевым словом объявляют переменную?",
+                testAnswers: [
+                    "var, let, const",
+                    "make",
+                    "new",
+                    "object"
+                ],
+                correctAnswer: [0]
+            },
+            {
+                testQuestions: "Что такое функция в JavaScript?",
+                testAnswers: [
+                    "Специальный тип переменной",
+                    "Команда для вывода данных",
+                    "Блок кода, который можно вызывать многократно",
+                    "Инструмент для работы с CSS"
+                ],
+                correctAnswer: [2]
+            },
+            {
+                testQuestions: "Какой метод выводит сообщение в консоль?",
+                testAnswers: [
+                    "print()",
+                    "console.log()",
+                    "alert()",
+                    "message()"
+                ],
+                correctAnswer: [1]
+            },
+            {
+                testQuestions: "Какой оператор используется для сравнения значений с учётом типа?",
+                testAnswers: [
+                    "==",
+                    "=",
+                    "===",
+                    "!="
+                ],
+                correctAnswer: [2]
+            },
+            {
+                testQuestions: "Какой метод используют для получения элемента по ID?",
+                testAnswers: [
+                    "getElement()",
+                    "query()",
+                    "getElementById()",
+                    "findId()"
+                ],
+                correctAnswer: [2]
+            },
+            {
+                testQuestions: "Что делает оператор if?",
+                testAnswers: [
+                    "Повторяет блок кода",
+                    "Проверяет условие и выполняет код при истинности",
+                    "Объявляет функцию",
+                    "Подключает модуль"
+                ],
+                correctAnswer: [1]
+            },
+            {
+                testQuestions: "Где обычно выполняется JavaScript-код?",
+                testAnswers: [
+                    "В браузере",
+                    "В текстовом редакторе",
+                    "В графическом редакторе",
+                    "В файловой системе"
+                ],
+                correctAnswer: [0]
             }
         ];
         let currentQuestion = 0;
@@ -86,7 +176,7 @@
 
             let q = testData[currentQuestion];
             questionNumberJS.textContent = `Вопрос ${currentQuestion + 1} из ${testData.length}`;
-            questionJS.textContent = q.testQuestions;
+            questionsJS.textContent = q.testQuestions;
 
             for (let i = 0; i < q.testAnswers.length; i++){
                     let blockForCheckbox = document.createElement("div");
@@ -134,8 +224,7 @@
             timerJS.textContent = `Осталось ${timeCounter} секунд`;
             timeCounter--;
             if (timeCounter < 0){
-                answerJS.click();
-                return;
+                clearInterval();
             }
             setTimeout(Timer, 1000);
         }
