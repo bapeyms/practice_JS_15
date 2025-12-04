@@ -216,7 +216,13 @@
                 alert("Inccorect!");
             }
             else{
-                alert(ok ? "Correct" : "Incorrect");
+                if (ok){
+                    correctCounter++;
+                    alert("Correct!");
+                }
+                else {
+                    alert("Incorrect!");
+                } 
             }
             NextQuestion();
         }
@@ -232,7 +238,7 @@
             }
             else {
                 timerJS.textContent = "";
-                alert("Test is over");
+                alert(`Test is over! Correct answers: ${correctCounter}`);
             }
         }
 
