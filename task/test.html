@@ -167,10 +167,17 @@
         
         let currentQuestion = 0;
         let correctCounter = 0;
+        let perc = 0;
 
         let timeCounter = 10;
         let timerID;
 
+        if (localStorage.getItem("currentQuestion") !== null){
+            currentQuestion = Number(localStorage.getItem("currentQuestion"));
+        }
+        if (localStorage.getItem("correctCounter") !== null){
+            correctCounter = Number(localStorage.getItem("correctCounter"));
+        }
         Show();
         Timer();
 
@@ -229,6 +236,8 @@
 
         function NextQuestion() {
             clearInterval(timerID);
+            localStorage.setItem("currentQuestion", currentQuestion + 1);
+            localStorage.setItem("correctCounter", correctCounter);
             currentQuestion++;
 
             if(currentQuestion < testData.length){
@@ -238,7 +247,12 @@
             }
             else {
                 timerJS.textContent = "";
-                alert(`Test is over! Correct answers: ${correctCounter}`);
+                perc = (correctCounter / testData.length) * 100;
+                perc = perc.toFixed(1);
+                alert(`Test is over!\nYour result: ${perc}%\nCorrect answers: ${correctCounter}`);
+                localStorage.setItem("resultPercent", perc);
+                localStorage.removeItem("currentQuestion", currentQuestion + 1);
+                localStorage.removeItem("correctCounter", correctCounter);
             }
         }
 
