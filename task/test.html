@@ -19,20 +19,32 @@
         #questions{
             background-color: rgb(224, 224, 224);
         }
-        #answer{
+        #answer, #finish{
             margin-top: 1em;
-            width: 10%;
+            width: 25%;
             height: 25px;
+        }
+        .buttonsSettings{
+            display: flex;
+            gap: 5px;
+        }
+        .buttonDisplayNone{
+            display: none;
+        }
+        .buttonDisplay{
+            display: inline;
         }
     </style>
 </head>
 <body>
     <div id="questionAppearance">
         <h3 id="questionNumber">p</h3>
-        <div id="questions">
-            
+        <div id="questions"></div>
+
+        <div class="buttonsSettings">
+            <button id="answer">Ответить</button>
+            <button id="finish" class="buttonDisplayNone">Показать результат</button>
         </div>
-        <button id="answer">Ответить</button>
         <p id="timer"></p>
     </div>
     
@@ -40,6 +52,7 @@
         let questionNumberJS = document.querySelector("#questionNumber");
         let questionsJS = document.querySelector("#questions");
         let answerJS = document.querySelector("#answer");
+        let finishJS = document.querySelector("#finish");
         let timerJS = document.querySelector("#timer");
 
         let testData = [
@@ -247,9 +260,9 @@
             }
             else {
                 timerJS.textContent = "";
-                perc = (correctCounter / testData.length) * 100;
-                perc = perc.toFixed(1);
-                alert(`Test is over!\nYour result: ${perc}%\nCorrect answers: ${correctCounter}`);
+                finishJS.classList.remove("buttonDisplayNone");
+                finishJS.classList.add("buttonDisplay");
+                finishJS.addEventListener("click", FinishTest);
                 localStorage.setItem("resultPercent", perc);
                 localStorage.removeItem("currentQuestion", currentQuestion + 1);
                 localStorage.removeItem("correctCounter", correctCounter);
@@ -267,6 +280,16 @@
                     CheckAnswer(true);
                 }
             }, 1000);
+        }
+
+        function FinishTest(){
+            perc = (correctCounter / testData.length) * 100;
+            perc = perc.toFixed(1);
+            let win = window.open("", "", "width=600,height=600");
+            win.document.write(`
+            <h2>Test is finished!</h2>
+            <p>Result: ${perc}%</p>
+            <p>Correct: ${correctCounter}</p>`);
         }
     </script>
 </body>
